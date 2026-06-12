@@ -390,7 +390,7 @@ a {
 .mb-8 { margin-bottom: 32px; }
 .mb-12 { margin-bottom: 48px; }
 
-.mt-0.5 { margin-top: 2px; }
+.mt-0\.5 { margin-top: 2px; }
 .mt-1 { margin-top: 4px; }
 .mt-2 { margin-top: 8px; }
 .mt-4 { margin-top: 16px; }
@@ -401,12 +401,12 @@ a {
 /* Sizing Helpers */
 .w-3 { width: 12px; }
 .h-3 { height: 12px; }
-.w-3.5 { width: 14px; }
-.h-3.5 { height: 14px; }
+.w-3\.5 { width: 14px; }
+.h-3\.5 { height: 14px; }
 .w-4 { width: 16px; }
 .h-4 { height: 16px; }
-.w-4.5 { width: 18px; }
-.h-4.5 { height: 18px; }
+.w-4\.5 { width: 18px; }
+.h-4\.5 { height: 18px; }
 .w-5 { width: 20px; }
 .h-5 { height: 20px; }
 .w-6 { width: 24px; }
