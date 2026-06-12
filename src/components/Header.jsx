@@ -41,7 +41,7 @@ export default function Header({ activeCategory, onCategoryChange, onBack }) {
                 <button
                   key={cat.id}
                   onClick={() => handleNavClick(cat.id)}
-                  className={`px-3 py-1.5 font-sans text-xs font-bold tracking-wider uppercase transition-colors rounded ${active ? 'bg-teal-500/10 text-teal-600' : 'text-slate-500 hover:text-slate-800'}`}
+                  className={`px-3 py-2 font-sans text-xs font-bold tracking-wider uppercase transition-colors rounded ${active ? 'bg-teal-500/10 text-teal-600' : 'text-slate-500 hover:text-slate-800'}`}
                 >
                   {cat.label}
                 </button>
@@ -76,14 +76,14 @@ export default function Header({ activeCategory, onCategoryChange, onBack }) {
               className="hover:text-teal-600 transition-colors"
               title="Google Share Link"
             >
-              <ExternalLink className="w-4.5 h-4.5" />
+              <ExternalLink className="w-4 h-4" />
             </a>
             <a 
               href="mailto:darshank9036@gmail.com" 
               className="hover:text-teal-600 transition-colors"
               title="Email"
             >
-              <Mail className="w-4.5 h-4.5" />
+              <Mail className="w-4 h-4" />
             </a>
           </div>
         </div>
