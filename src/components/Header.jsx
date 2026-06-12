@@ -28,7 +28,7 @@ export default function Header({ activeCategory, onCategoryChange, onBack }) {
             DARSHAN’S NOTES
           </h1>
           <p className="brand-subtitle">
-            The Tech Journals of an Embedded Systems & Firmware Engineer
+            The Technical Logs & Case Studies of an Embedded Systems & Firmware Engineer
           </p>
         </div>
 

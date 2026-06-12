@@ -7,19 +7,28 @@ export default function FeaturedPost({ article, onReadArticle }) {
   return (
     <div className="featured-box">
       {/* Visual background block */}
-      <div className="bg-slate-900 min-h-[260px] md:min-h-full flex flex-col justify-between p-8 relative overflow-hidden select-none text-slate-400">
+      <div className="bg-slate-900 min-h-\[260px\] md:min-h-full flex flex-col justify-between p-8 relative overflow-hidden select-none text-slate-400">
+        {/* Image background with overlay */}
+        {article.image && (
+          <img 
+            src={`${import.meta.env.BASE_URL}${article.image}`} 
+            alt={article.title}
+            className="absolute inset-0 w-full h-full object-cover opacity-40 transition-transform duration-500 hover:scale-105"
+          />
+        )}
+        <div className="absolute inset-0 bg-slate-950/60 mix-blend-multiply" />
         {/* Subtle schematic elements */}
         <div className="absolute inset-0 opacity-10 bg-[radial-gradient(#0d9488_1px,transparent_1px)] [background-size:16px_16px]" />
         
         <div className="relative z-10">
-          <span className="font-mono text-[10px] text-teal-400 font-bold uppercase tracking-widest border border-teal-500/30 px-2 py-0.5 rounded">
-            FEATURED PROJECT ARCHIVE
+          <span className="font-mono text-[10px] text-teal-400 font-bold uppercase tracking-widest border border-teal-500/30 px-2 py-0.5 rounded bg-slate-950/80">
+            FEATURED PROJECT CASE STUDY
           </span>
         </div>
 
-        <div className="relative z-10 flex flex-col gap-2 mt-8 md:mt-0">
-          <p className="font-mono text-slate-500 text-[10px]">REGISTER ADDRESS: 0x00A0</p>
-          <p className="font-mono text-slate-500 text-[10px]">CPU: ESP32-WROOM-32D Dual-Core</p>
+        <div className="relative z-10 flex flex-col gap-2 mt-8 md:mt-0 bg-slate-950/40 p-3 rounded border border-slate-800/40 backdrop-blur-sm">
+          <p className="font-mono text-slate-300 text-[10px]">REGISTER ADDRESS: 0x00A0</p>
+          <p className="font-mono text-slate-300 text-[10px]">CPU: ESP32-WROOM-32D Dual-Core</p>
           <p className="font-mono text-teal-400 text-[10px] animate-pulse">STATUS: TELEMETRY_LINK_ONLINE</p>
         </div>
       </div>

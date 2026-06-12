@@ -12,7 +12,8 @@ export const articles = [
     author: 'Darshan K',
     excerpt: 'How I engineered a secure asset deployment stack using ESP32, optimized SPI flash transactions, and encrypted MQTT protocols to reduce validation latency by 18%.',
     featured: true,
-    image: 'iot_featured.jpg',
+    image: 'iot_access.png',
+    github: 'https://github.com/31darsh/My_Protfolio',
     content: `
 <p>In modern industrial and smart building access systems, speed and security are often in a direct tug-of-war. For my project, the <strong>Server-Based IoT Access Control System</strong>, the goal was to build a system that verified card credentials against an encrypted database and logged events with minimal delay.</p>
 
@@ -50,6 +51,8 @@ export const articles = [
     author: 'Darshan K',
     excerpt: 'How I built an embedded telemetry system handling UART streams and created a custom string-token parser to prevent buffer overruns under high-speed data feeds.',
     featured: false,
+    image: 'flight_telemetry.png',
+    github: 'https://github.com/31darsh/My_Protfolio',
     content: `
 <p>Telemetry parsing is a critical task in aerospace and robotics. A single buffer overflow or unhandled interrupt can crash the microcontroller, bringing down the entire flight system. For the **Flight Telemetry Tracker**, I set out to write a bare-metal parser in Embedded C on an ARM Cortex-M4 (STM32F4) chip.</p>
 
@@ -87,6 +90,8 @@ void USART2_IRQHandler(void) {
     author: 'Darshan K',
     excerpt: 'A review of the design principles and build configurations behind this React + Vite magazine portfolio. Highlighting asset pipelines, CNAME configurations, and clean UI.',
     featured: false,
+    image: 'portfolio_showcase.png',
+    github: 'https://github.com/31darsh/My_Protfolio',
     content: `
 <p>As an Embedded Engineer, I wanted my portfolio to be different from the typical generic layouts. Following inspiration from editorial platforms like **GatesNotes**, I decided to build a clean, magazine-like blog to document my projects and tech journey.</p>
 

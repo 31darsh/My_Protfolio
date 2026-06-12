@@ -55,6 +55,17 @@ export default function ArticleView({ article, onBack }) {
         </div>
       </div>
 
+      {/* Large Banner Image */}
+      {article.image && (
+        <div className="article-banner-frame">
+          <img 
+            src={`${import.meta.env.BASE_URL}${article.image}`} 
+            alt={article.title} 
+            className="w-full h-full object-cover"
+          />
+        </div>
+      )}
+
       {/* Article Body */}
       <article 
         className="article-body"

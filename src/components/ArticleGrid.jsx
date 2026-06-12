@@ -29,7 +29,7 @@ export default function ArticleGrid({ articles, onReadArticle, activeCategory })
       {/* Sub-header with search input */}
       <div className="flex flex-col sm:flex-row items-center justify-between gap-4 border-b border-slate-200 pb-4">
         <h3 className="font-tech text-sm font-extrabold uppercase tracking-widest text-slate-800">
-          Recent Journals & Chronicles
+          Recent Project Logs & Case Studies
         </h3>
         
         {/* Search Box */}
@@ -38,7 +38,7 @@ export default function ArticleGrid({ articles, onReadArticle, activeCategory })
             type="text"
             value={searchQuery}
             onChange={(e) => setSearchQuery(e.target.value)}
-            placeholder="Search logs & journals..."
+            placeholder="Search logs & case studies..."
             className="w-full pl-9 pr-4 py-1.5 bg-white border border-slate-200 rounded text-xs focus:outline-none focus:border-teal-500 font-sans"
           />
           <Search className="absolute left-3 top-2.5 w-3.5 h-3.5 text-slate-400" />
@@ -56,6 +56,17 @@ export default function ArticleGrid({ articles, onReadArticle, activeCategory })
             const Icon = art.icon;
             return (
               <article key={art.id} className="magazine-card">
+                {art.image && (
+                  <div 
+                    onClick={() => onReadArticle(art.id)}
+                    className="grid-card-image-frame"
+                  >
+                    <img 
+                      src={`${import.meta.env.BASE_URL}${art.image}`} 
+                      alt={art.title} 
+                    />
+                  </div>
+                )}
                 <div className="magazine-card-content">
                   {/* Category */}
                   <span className="category-tag">{art.category}</span>
