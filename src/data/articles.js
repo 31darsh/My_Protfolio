@@ -1,4 +1,4 @@
-import { Cpu, Radio, Terminal, Award, BookOpen, Layers, Settings, Server, Zap, Compass, Eye, Video, Smartphone, MapPin } from 'lucide-react';
+import { Cpu, Radio, Terminal, Award, BookOpen, Layers, Settings, Server, Zap, Compass, Eye, Video, Smartphone, MapPin, Network } from 'lucide-react';
 
 export const articles = [
   {
@@ -502,6 +502,45 @@ void USART2_IRQHandler(void) {
   <li><strong>Power Conservation:</strong> Manages STM32 low-power modes (Stop/Sleep), waking up periodically or upon sensing movement from a built-in accelerometer to conserve battery.</li>
 </ul>
     `
+  },
+  {
+    id: '5g-network-slicing',
+    title: 'QoS-Aware 5G Network Slicing: Hybrid AHP-TOPSIS & DQN Allocation Engine',
+    category: 'TELECOM & NETWORKS',
+    tag: '5G CORE',
+    icon: Network,
+    date: 'Jun 10, 2026',
+    readTime: '7 MIN READ',
+    author: 'Darshan K',
+    excerpt: 'Designing an industrial-grade 5G Network Slice Selection Function (NSSF) decision engine running AHP-TOPSIS multi-criteria models and self-learning DQN agents.',
+    featured: false,
+    image: '5g_network_slicing.png',
+    github: 'https://github.com/31darsh/5G-Network-Slicing-QoS-Decision-Engine',
+    content: `
+<p>Modern 5G networks must support diverse applications with highly contrasting Quality of Service (QoS) requirements—from ultra-reliable low-latency communications (URLLC) to massive machine-type communications (mMTC) and enhanced mobile broadband (eMBB). For my M.Tech mini-project in Wireless Communication Technologies, I engineered a **QoS-Aware Slice Selection Decision Engine** functioning as a 5G Core Network Slice Selection Function (NSSF) control service.</p>
+
+<h2>Mathematical Foundations: AHP & TOPSIS</h2>
+<p>The core selection engine implements a hybrid Multi-Criteria Decision-Making (MCDM) algorithm combining two mathematical workflows:</p>
+<h3>1. Analytic Hierarchy Process (AHP)</h3>
+<p>AHP calculates the weights of QoS criteria (Throughput, Latency, Packet Loss, Jitter, Cost) dynamically based on the requested 3GPP service class. For example, URLLC prioritizes latency and jitter, while eMBB demands throughput. The engine builds a pairwise comparison matrix and calculates the principal eigenvector. It also verifies the **Consistency Ratio ($CR &lt; 0.1$)** to ensure logical consistency in weighting.</p>
+
+<h3>2. TOPSIS Method</h3>
+<p>The Technique for Order of Preference by Similarity to Ideal Solution (TOPSIS) ranks the candidate network slices. It computes the normalized decision matrix, identifies the Positive-Ideal Solution (best slice parameters) and Negative-Ideal Solution (worst slice parameters) in the active state, and ranks candidate slices based on their Euclidean distance to these ideal targets.</p>
+
+<h2>Deep Q-Network (DQN) Reinforcement Learning Agent</h2>
+<p>Alongside AHP-TOPSIS, I developed a dependency-free **DQN Reinforcement Learning Agent** using raw **NumPy**. The agent consists of a multi-layer neural network that estimates state-action values ($Q$-values). It takes slice congestion telemetry as input, outputs allocation actions, and learns optimal allocation strategies from reward feedback based on SLA compliance and user satisfaction scores.</p>
+
+<h2>Core Architecture & 5G Lab Integration</h2>
+<p>The application is written in Python, featuring a modular core, a FastAPI API gateway, and a glassmorphic HTML5 dashboard displaying telemetry charts:</p>
+<ul class="bullet-list">
+  <li><strong>FastAPI SBI Gateway:</strong> Serves Service Based Interface REST API endpoints (e.g. <code>/select-slice</code>) for session slice queries.</li>
+  <li><strong>Traffic Injector:</strong> A Python client script that simulates traffic from the Access and Mobility Management Function (AMF), injecting random multi-service connection queries to stress-test NSSF selection.</li>
+  <li><strong>Core Config Exporters:</strong> Generates configuration templates for open-source 5G cores, mapping selected S-NSSAI slices directly to <strong>Open5GS</strong> (<code>nssf.yaml</code>) and <strong>free5GC</strong> configurations.</li>
+</ul>
+
+<h2>Achievements & Performance Metrics</h2>
+<p>The NSSF decision gateway handles selection requests in **less than 4.5ms** under simulated peak load conditions. In comparison runs, AHP-TOPSIS consistently maintained SLA requirements with zero latency violations, while the DQN agent learned to balance traffic loads across virtual slices, lowering congestion dropouts by 14% compared to standard static mapping algorithms.</p>
+`
   }
 ];
 
