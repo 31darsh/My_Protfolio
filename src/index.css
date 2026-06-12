@@ -181,7 +181,7 @@ a {
   color: var(--text-muted);
   margin-top: auto;
   padding-top: 16px;
-  border-t: 1px solid var(--bg-accent);
+  border-top: 1px solid var(--bg-accent);
 }
 
 /* Button style */
@@ -315,4 +315,210 @@ a {
     flex-direction: row;
     align-items: flex-start;
   }
+}
+
+/* ==========================================
+   UTILITY LAYOUT & HELPER CLASSES (VANILLA CSS)
+   ========================================== */
+.flex { display: flex; }
+.flex-col { flex-direction: column; }
+.flex-row { flex-direction: row; }
+.flex-wrap { flex-wrap: wrap; }
+.flex-shrink-0 { flex-shrink: 0; }
+.flex-grow { flex-grow: 1; }
+
+.items-center { align-items: center; }
+.items-start { align-items: flex-start; }
+
+.justify-center { justify-content: center; }
+.justify-between { justify-content: space-between; }
+.justify-end { justify-content: flex-end; }
+
+.grid { display: grid; }
+.grid-cols-1 { grid-template-columns: repeat(1, minmax(0, 1fr)); }
+
+@media (min-width: 640px) {
+  .sm\:grid-cols-2 { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+  .sm\:flex-row { flex-direction: row; }
+  .sm\:items-center { align-items: center; }
+}
+
+@media (min-width: 768px) {
+  .md\:grid-cols-12 { grid-template-columns: repeat(12, minmax(0, 1fr)); }
+  .md\:col-span-4 { grid-column: span 4 / span 4; }
+  .md\:col-span-8 { grid-column: span 8 / span 8; }
+}
+
+/* Spacing Helpers */
+.gap-1 { gap: 4px; }
+.gap-1\.5 { gap: 6px; }
+.gap-2 { gap: 8px; }
+.gap-3 { gap: 12px; }
+.gap-4 { gap: 16px; }
+.gap-5 { gap: 20px; }
+.gap-6 { gap: 24px; }
+.gap-8 { gap: 32px; }
+.gap-12 { gap: 48px; }
+
+.pb-2 { padding-bottom: 8px; }
+.pb-3 { padding-bottom: 12px; }
+.pb-4 { padding-bottom: 16px; }
+.pb-6 { padding-bottom: 24px; }
+
+.pt-2 { padding-top: 8px; }
+.pt-4 { padding-top: 16px; }
+.pt-12 { padding-top: 48px; }
+
+.py-1.5 { padding-top: 6px; padding-bottom: 6px; }
+.py-4 { padding-top: 16px; padding-bottom: 16px; }
+.py-12 { padding-top: 48px; padding-bottom: 48px; }
+.py-16 { padding-top: 64px; padding-bottom: 64px; }
+
+.px-3 { padding-left: 12px; padding-right: 12px; }
+.p-3 { padding: 12px; }
+.p-4 { padding: 16px; }
+.p-5 { padding: 20px; }
+.p-6 { padding: 24px; }
+.p-8 { padding: 32px; }
+.p-10 { padding: 40px; }
+.p-12 { padding: 48px; }
+
+.mb-1 { margin-bottom: 4px; }
+.mb-2 { margin-bottom: 8px; }
+.mb-3 { margin-bottom: 12px; }
+.mb-4 { margin-bottom: 16px; }
+.mb-6 { margin-bottom: 24px; }
+.mb-8 { margin-bottom: 32px; }
+.mb-12 { margin-bottom: 48px; }
+
+.mt-0.5 { margin-top: 2px; }
+.mt-1 { margin-top: 4px; }
+.mt-2 { margin-top: 8px; }
+.mt-4 { margin-top: 16px; }
+.mt-8 { margin-top: 32px; }
+.mt-12 { margin-top: 48px; }
+.ml-auto { margin-left: auto; }
+
+/* Sizing Helpers */
+.w-3 { width: 12px; }
+.h-3 { height: 12px; }
+.w-3.5 { width: 14px; }
+.h-3.5 { height: 14px; }
+.w-4 { width: 16px; }
+.h-4 { height: 16px; }
+.w-4.5 { width: 18px; }
+.h-4.5 { height: 18px; }
+.w-5 { width: 20px; }
+.h-5 { height: 20px; }
+.w-6 { width: 24px; }
+.h-6 { height: 24px; }
+.w-10 { width: 40px; }
+.h-10 { height: 40px; }
+.w-20 { width: 80px; }
+.h-20 { height: 80px; }
+.w-32 { width: 128px; }
+.h-32 { height: 128px; }
+.w-full { width: 100%; }
+.h-full { height: 100%; }
+
+.md\:w-24 { width: 96px; }
+.md\:h-24 { height: 96px; }
+.md\:w-full { width: 100%; }
+.md\:h-auto { height: auto; }
+.md\:max-h-\[300px\] { max-height: 300px; }
+
+.min-h-\[260px\] { min-height: 260px; }
+.min-h-\[180px\] { min-height: 180px; }
+.max-w-xl { max-width: 36rem; }
+
+/* Rounded Corners & Borders */
+.rounded { border-radius: 4px; }
+.rounded-lg { border-radius: 8px; }
+.rounded-full { border-radius: 9999px; }
+.border-b { border-bottom: 1px solid var(--color-border); }
+.border-t { border-top: 1px solid var(--color-border); }
+.border { border: 1px solid var(--color-border); }
+
+/* Color Helpers */
+.bg-white { background-color: var(--bg-card); }
+.bg-slate-50 { background-color: var(--bg-accent); }
+.bg-slate-900 { background-color: #0f172a; }
+.bg-slate-800 { background-color: #1e293b; }
+.bg-slate-950\/40 { background-color: rgba(2, 6, 23, 0.4); }
+
+.text-slate-100 { color: #f8fafc; }
+.text-slate-300 { color: #cbd5e1; }
+.text-slate-400 { color: var(--text-muted); }
+.text-slate-500 { color: var(--text-muted); }
+.text-slate-600 { color: var(--text-secondary); }
+.text-slate-800 { color: var(--text-primary); }
+.text-teal-400 { color: #2dd4bf; }
+.text-teal-600 { color: var(--color-brand); }
+.text-white { color: #ffffff; }
+
+/* Typography Weight & Families */
+.font-sans { font-family: var(--font-sans); }
+.font-serif { font-family: var(--font-serif); }
+.font-mono { font-family: var(--font-mono); }
+
+.font-bold { font-weight: 700; }
+.font-semibold { font-weight: 600; }
+.font-black { font-weight: 900; }
+.font-normal { font-weight: 400; }
+
+.text-xs { font-size: 0.75rem; }
+.text-[10px] { font-size: 10px; }
+.text-[9px] { font-size: 9px; }
+.text-sm { font-size: 0.875rem; }
+.text-base { font-size: 1rem; }
+.text-lg { font-size: 1.125rem; }
+.text-xl { font-size: 1.25rem; }
+.text-2xl { font-size: 1.5rem; }
+.text-3xl { font-size: 1.875rem; }
+.text-4xl { font-size: 2.25rem; }
+.text-5xl { font-size: 3rem; }
+
+.uppercase { text-transform: uppercase; }
+.italic { font-style: italic; }
+.tracking-wider { letter-spacing: 0.05em; }
+.tracking-widest { letter-spacing: 0.1em; }
+
+/* Interactive & Behaviors */
+.cursor-pointer { cursor: pointer; }
+.select-none { user-select: none; }
+.overflow-hidden { overflow: hidden; }
+.relative { position: relative; }
+.absolute { position: absolute; }
+.inset-0 { top: 0; right: 0; bottom: 0; left: 0; }
+.z-10 { z-index: 10; }
+.flex-shrink-0 { flex-shrink: 0; }
+.resize-none { resize: none; }
+.focus\:outline-none:focus { outline: none; }
+.focus\:border-teal-500:focus { border-color: var(--color-brand); }
+
+/* SVG element reset (crucial for inline SVGs in custom css) */
+svg {
+  display: inline-block;
+  vertical-align: middle;
+  flex-shrink: 0;
+}
+.w-4 { width: 16px; height: 16px; }
+.h-4 { width: 16px; height: 16px; }
+.w-4\.5 { width: 18px; height: 18px; }
+.h-4\.5 { width: 18px; height: 18px; }
+.w-5 { width: 20px; height: 20px; }
+.h-5 { width: 20px; height: 20px; }
+.w-6 { width: 24px; height: 24px; }
+.h-6 { width: 24px; height: 24px; }
+
+/* Glassmorphism custom styling for editorial */
+.glass-panel {
+  background-color: var(--bg-card);
+  border: 1px solid var(--color-border);
+}
+
+.profile-card img {
+  max-width: 100%;
+  height: auto;
+  display: block;
 }
