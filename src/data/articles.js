@@ -1,4 +1,4 @@
-import { Cpu, Radio, Terminal, Award, BookOpen, Layers, Settings } from 'lucide-react';
+import { Cpu, Radio, Terminal, Award, BookOpen, Layers, Settings, Server, Zap, Compass, Eye, Video, Smartphone, MapPin } from 'lucide-react';
 
 export const articles = [
   {
@@ -236,6 +236,270 @@ void USART2_IRQHandler(void) {
   <li><strong>Advanced Embedded Systems Validation</strong> (eTech Prowess, Feb 2025): Deep dive into firmware test methodologies, hardware-in-the-loop (HIL) testing, and automated test script design.</li>
   <li><strong>IoT-Network Specialist Professional Certificate</strong> (Skill India, Mar 2026): Focused on network design, cellular modems (LTE-M, NB-IoT), and protocol architectures.</li>
   <li><strong>C Development & Programming Foundations</strong> (Great Learning Academy, Jun 2023): Core training in memory pointers, preprocessor directives, and standard C library programming.</li>
+</ul>
+    `
+  },
+  {
+    id: 'server-relay-control',
+    title: 'Server-Based Relay Control: High-Reliability W5500 & STM32 Architecture',
+    category: 'FIRMWARE & IoT',
+    tag: 'FIRMWARE',
+    icon: Server,
+    date: 'Apr 15, 2026',
+    readTime: '6 MIN READ',
+    author: 'Darshan K',
+    excerpt: 'Engineering an industrial-grade relay control board pairing STM32 firmware with W5500 Ethernet, a Node.js TCP daemon, and a custom React web console.',
+    featured: false,
+    image: 'server_relay_control.png',
+    github: 'https://github.com/31darsh/Server_based_Relay_control_W5500',
+    content: `
+<p>In telemetry and remote controls, Wi-Fi can be unreliable due to RF noise and physical barriers. For the <strong>Server-Based Relay Control System</strong>, I engineered a high-reliability hardware-software interface utilizing the STM32F103 microcontroller, a hardwired W5500 SPI-to-Ethernet controller, a Node.js TCP/HTTP daemon, and an admin web interface.</p>
+
+<h2>Hardware Design & Pin Configuration</h2>
+<p>The firmware was written in C using STM32 HAL libraries, targeting the SPI1 interface of the STM32F103 board. Pin mapping was as follows:</p>
+<ul class="bullet-list">
+  <li><strong>W5500 SPI1 SCK/MISO/MOSI:</strong> <code>PA5</code>, <code>PA6</code>, <code>PA7</code></li>
+  <li><strong>W5500 CS (Chip Select):</strong> <code>PA4</code></li>
+  <li><strong>W5500 Reset Pin:</strong> <code>PB1</code></li>
+  <li><strong>Relay Control Channel 1:</strong> <code>PB5</code> (configured as push-pull output, active high)</li>
+</ul>
+
+<h2>Ethernet Controller Integration (W5500)</h2>
+<p>The W5500 houses a hardwired TCP/IP stack. I programmed custom drivers to communicate with the chip via SPI DMA at 18 MHz:</p>
+<h3>1. Link-State & PHY Ingestion</h3>
+<p>Implements a background loop monitoring the PHY register. If a line break or cable disconnect is detected, the device enters a soft-reconnection loop, debouncing the interface registers to avoid packet dropouts.</p>
+
+<h3>2. Socket Buffer Management</h3>
+<p>Configured separate 2KB circular buffers for TX/RX packets, establishing a persistent TCP connection to the backend server (port 9000). Keep-alive heartbeats are sent every 5 seconds to notify the central daemon of the device status.</p>
+
+<h2>Backend Node.js & React Dashboard</h2>
+<p>The server infrastructure operates a dual-port listener architecture:</p>
+<ul class="bullet-list">
+  <li><strong>TCP Daemon (Port 9000):</strong> A Node.js raw socket listener that parses incoming binary messages from the STM32, updating device statuses in a thread-safe JSON datastore.</li>
+  <li><strong>HTTP API & Static Server (Port 8080):</strong> Exposes REST API endpoints for user authentication (default credentials: <code>admin</code>/<code>admin123</code>) and serves a dashboard to monitor logs and toggle the relay state remotely.</li>
+</ul>
+
+<h2>Performance & Verification</h2>
+<p>With hardwired Ethernet, the system achieved a sub-millisecond local network response time. Physical relay triggers occurred in under 12ms from clicking the button on the React dashboard. Tested continuously for 72 hours, the connection remained active with zero packet loss.</p>
+    `
+  },
+  {
+    id: 'iot-smart-energy-meter',
+    title: 'Advanced Smart Energy Meter: 1kHz Waveform Ingestion & Load Disaggregation',
+    category: 'FIRMWARE & IoT',
+    tag: 'FIRMWARE',
+    icon: Zap,
+    date: 'Mar 28, 2026',
+    readTime: '6 MIN READ',
+    author: 'Darshan K',
+    excerpt: 'An ESP32 AC Smart Energy Meter capturing real-time telemetry, calculating domestic billing slabs, and executing automatic overcurrent load trips.',
+    featured: false,
+    image: 'iot_smart_energy_meter.png',
+    github: 'https://github.com/31darsh/IoT-Enable-Smart-Energy-Meter',
+    content: `
+<p>Smart grid monitoring requires real-time accuracy and resilient local safety mechanisms. For the <strong>Advanced AC Smart Energy Meter</strong>, I designed an ESP32-based hardware node integrated with a FastAPI Python server to track parameters and trigger automatic load disconnections on anomalies.</p>
+
+<h2>Dual-Core ESP32 Architecture</h2>
+<p>To ensure high-frequency measurements while maintaining cloud connectivity, the firmware splits processing across the ESP32's dual cores using FreeRTOS:</p>
+<ul class="bullet-list">
+  <li><strong>Core 0 (1kHz RMS Math):</strong> Dedicated to high-speed analog sampling of current and voltage waveforms. Computes Root-Mean-Square (RMS) voltage, current, power factor (PF), and active power ($P = V \times I \times \text{PF}$) in real-time.</li>
+  <li><strong>Core 1 (Networking & UI):</strong> Drives the local SPI LCD display and streams telemetry payloads via WebSockets to the Python server. Confirms socket heartbeats every 1 second.</li>
+</ul>
+
+<h2>FastAPI Telemetry Daemon</h2>
+<p>The backend was built using Python and FastAPI, serving as a real-time data aggregator and event logger:</p>
+<ul class="bullet-list">
+  <li><strong>WebSocket Relays:</strong> Connects hardware and frontend dashboards. The backend acts as a low-latency conduit, pushing JSON telemetry to clients instantly.</li>
+  <li><strong>Data Storage:</strong> Writes parameters to a thread-safe SQLite database and logs events to a local Excel sheet with self-healing checks to recover from sudden power dropouts.</li>
+  <li><strong>Billing Slab Logic:</strong> Computes power consumption costs in real-time according to local utility standards (BESCOM slabs).</li>
+</ul>
+
+<h2>Offline Simulation & Safety Triggers</h2>
+<p>A web-based simulation mode is built into the FastAPI UI, enabling testing without physical AC wiring. Safety thresholds are configured in <code>config.h</code>:</p>
+<ul class="bullet-list">
+  <li><strong>Overvoltage (OV):</strong> $&gt;265\text{V}$</li>
+  <li><strong>Undervoltage (UV):</strong> $&lt;180\text{V}$</li>
+  <li><strong>Overcurrent (OC):</strong> $&gt;5\text{A}$</li>
+</ul>
+<p>When thresholds are crossed, the ESP32's physical relay instantly opens, protecting connected loads from damage.</p>
+    `
+  },
+  {
+    id: 'namma-civic-ai',
+    title: 'Namma Civic: Bridging Governance and Citizens via Conversational AI',
+    category: 'AI & WEB SOFTWARE',
+    tag: 'AI',
+    icon: Compass,
+    date: 'Feb 10, 2026',
+    readTime: '7 MIN READ',
+    author: 'Darshan K',
+    excerpt: 'A React PWA conversational AI agent utilizing Google Gemini 2.0 Flash and Firebase to match citizens with 3000+ government welfare schemes.',
+    featured: false,
+    image: 'namma_civic_ai.png',
+    github: 'https://github.com/31darsh/Namma-Civic',
+    content: `
+<p>Out of thousands of government welfare schemes, over 70% of eligible citizens in India never apply due to bureaucratic complexity and language barriers. During Hackathon 2026, I built <strong>Namma Civic</strong>, an AI-powered conversational PWA that guides citizens through scheme discovery, eligibility assessment, and application pre-filling.</p>
+
+<h2>Multi-Agent AI Architecture</h2>
+<p>Namma Civic operates using a state machine of <strong>8 domain-isolated AI agents</strong> powered by <strong>Google Gemini 2.0 Flash</strong>:</p>
+<ul class="bullet-list">
+  <li><strong>Housing Agent:</strong> Analyzes eligibility for PMAY Urban and PMAY Gramin housing grants.</li>
+  <li><strong>Business Agent:</strong> Guides users on PMEGP subsidies and PM Mudra micro-loans.</li>
+  <li><strong>Jobs & Education Agents:</strong> Matches profiles to national scholarship portals (NSP) and skill trainings.</li>
+  <li><strong>Family & Health Agents:</strong> Checks eligibility for PMJAY health insurance and pension schemes.</li>
+</ul>
+<p>Each agent maintains user session context and scores eligibility match percentages dynamically based on age, income, caste, and occupation.</p>
+
+<h2>Tech Stack & Offline-First Design</h2>
+<p>The application is built for maximum accessibility in low-connectivity areas:</p>
+<ul class="bullet-list">
+  <li><strong>Frontend:</strong> React 19 and Vite 8 with a mobile-first responsive layout matching native app guidelines.</li>
+  <li><strong>Database & Auth:</strong> Firebase Firestore stores user profiles and applications anonymously. LocalStorage is utilized as a primary cache, allowing the app to load instantly and run offline queries.</li>
+  <li><strong>Integrations:</strong> Features DigiLocker deep-linking in pre-fill screens and direct apply routes to official GOI portals.</li>
+</ul>
+
+<h2>Impact & Hackathon Metrics</h2>
+<p>The JS bundle size was compressed to <strong>221 KB</strong> (gzip), enabling quick load times over 2G networks. The AI reasoning latency averaged 1.8 seconds. Namma Civic demonstrates how conversational AI can democratize access to public digital infrastructure, turning complex government processes into simple chat flows.</p>
+    `
+  },
+  {
+    id: 'faceid-pro-ai',
+    title: 'FaceID Pro: 100% Browser-Based Biometric Verification with FaceNet',
+    category: 'COMPUTER VISION',
+    tag: 'AI',
+    icon: Eye,
+    date: 'Jan 22, 2026',
+    readTime: '5 MIN READ',
+    author: 'Darshan K',
+    excerpt: 'Implementing real-time face detection, 68-point facial landmark alignment, and FaceNet recognition in vanilla JS utilizing face-api.js.',
+    featured: false,
+    image: 'faceid_pro_ai.png',
+    github: 'https://github.com/31darsh/AI-Face-Recognition-System',
+    content: `
+<p>Traditional biometric systems rely on high-cost cloud computing platforms that introduce privacy risks and network latency. I engineered <strong>FaceID Pro</strong>, a browser-based, client-side identity verification dashboard that executes face detection and recognition locally on device webcams.</p>
+
+<h2>AI Pipeline & Model Architectures</h2>
+<p>The app loads three compressed deep learning models via CDN, running them in the browser using TensorFlow.js:</p>
+<h3>1. SSD MobileNet V1</h3>
+<p>A lightweight Single Shot Multibox Detector optimized for mobile devices, used to detect face locations in the camera frame with high precision.</p>
+
+<h3>2. 68-Point Landmark Model</h3>
+<p>Extracts geometric landmarks across the eyebrows, eyes, nose, mouth, and jawline. This geometry is used to align the face, correcting for tilt and head rotation before matching.</p>
+
+<h3>3. FaceNet Embeddings</h3>
+<p>A deep convolutional neural network that maps aligned faces into a 128-dimensional vector space. Known vectors are compared against current captures using Euclidean distance calculations.</p>
+
+<h2>Identity Enrollment & Database</h2>
+<p>The frontend dashboard features: (1) <strong>Enrollment Portal:</strong> Allows users to capture or upload images, assigning names, access levels, and departments; (2) <strong>Euclidean Matching:</strong> Compares incoming descriptors. A threshold of <code>&lt; 0.50</code> signifies a match; (3) <strong>Local Database:</strong> Encodes and saves face profiles directly into browser LocalStorage, ensuring absolute data privacy.</p>
+
+<h2>Real-Time Diagnostics</h2>
+<p>If an unknown face enters the camera frame, FaceID Pro highlights the bounding box in red, logs a snapshot in the alert panel, and plays an audio warning. Processing frames at a debounced rate of 600ms, the system runs smoothly on standard laptops without GPU acceleration, demonstrating highly efficient client-side edge intelligence.</p>
+    `
+  },
+  {
+    id: 'ai-hand-gesture',
+    title: 'AI Hand Gesture Counter: Real-Time Hand Landmark Tracking',
+    category: 'COMPUTER VISION',
+    tag: 'AI',
+    icon: Video,
+    date: 'Dec 18, 2025',
+    readTime: '4 MIN READ',
+    author: 'Darshan K',
+    excerpt: 'Building a real-time finger-counting dashboard using Google MediaPipe Hands tracking 21 key coordinate points.',
+    featured: false,
+    image: 'ai_hand_gesture.png',
+    github: 'https://github.com/31darsh/AI-Hand-Gesture-Control-System',
+    content: `
+<p>Human-Computer Interaction (HCI) is moving toward touchless gesture interfaces. For the <strong>AI Hand Gesture Counter</strong>, I built an interactive web dashboard that detects and counts fingers in real-time using Google MediaPipe AI libraries.</p>
+
+<h2>Landmark Coordinate Analysis</h2>
+<p>MediaPipe Hands detects 21 landmark nodes per hand (joint coordinates in a 3D coordinate space). I wrote detection logic in Vanilla Javascript to process these landmarks:</p>
+<ul class="bullet-list">
+  <li><strong>Finger Detection:</strong> Evaluates the Y-axis position of each fingertip relative to its corresponding PIP joint. If the tip coordinate is above the joint, the finger is counted as raised.</li>
+  <li><strong>Thumb Detection:</strong> Computes coordinate distances along the horizontal X-axis, comparing the thumb tip to the MCP joint to determine if the thumb is extended outward.</li>
+</ul>
+
+<h2>Local Server Configurations</h2>
+<p>Due to modern browser security policies, camera access is blocked on raw file paths (<code>file://</code>). I structured the app with setup instructions for: (1) VS Code Live Server; (2) Python <code>http.server</code> modules; and (3) Node.js <code>http-server</code> packages, ensuring seamless deployment over local hostnames.</p>
+
+<h2>Achievements</h2>
+<p>The app tracks up to two hands simultaneously (supporting up to 10 finger counts). It achieves 30 FPS tracking speeds on standard web browsers without native application wrappers, opening up options for touchless interfaces in medical consoles and smart displays.</p>
+    `
+  },
+  {
+    id: 'voice-controlled-robot',
+    title: 'Voice Controlled Robot: Embedded Parse Engines & Bluetooth Serial Control',
+    category: 'ROBOTICS & EMBEDDED',
+    tag: 'EMBEDDED',
+    icon: Radio,
+    date: 'Aug 20, 2025',
+    readTime: '4 MIN READ',
+    author: 'Darshan K',
+    excerpt: 'Programming a differential drive mobile robot using an ESP32, parsing serial Bluetooth commands, and controlling an L298N motor driver.',
+    featured: false,
+    image: 'voice_controlled_robot.png',
+    github: 'https://github.com/31darsh/Voice_Controlled_Robot',
+    content: `
+<p>Voice interaction offers intuitive control pathways for mobile robots. For the <strong>Voice Controlled Robot</strong>, I developed a firmware stack in Embedded C++ that allows an ESP32 robot chassis to navigate based on voice commands sent via Bluetooth.</p>
+
+<h2>Firmware Serial Parsing</h2>
+<p>The ESP32 uses its built-in Bluetooth Classic radio configured as a Serial Port Profile (SPP) receiver. I wrote a string parsing engine in the main loop:</p>
+<ul class="bullet-list">
+  <li><strong>Buffer Handling:</strong> Receives character packets asynchronously via Bluetooth UART. Stores them in a char array buffer until a line terminator is encountered.</li>
+  <li><strong>Keyword Matching:</strong> Trims and parses the buffer against preset movement commands: <code>"move forward"</code>, <code>"stop"</code>, <code>"turn left"</code>, <code>"turn right"</code>.</li>
+</ul>
+
+<h2>Motor Control Interface (L298N)</h2>
+<p>Upon detecting a keyword, the ESP32 adjusts GPIO logic levels connected to an L298N dual H-bridge motor driver. It outputs Pulse-Width Modulation (PWM) signals to control speed, ensuring smooth acceleration and deceleration curves for the wheels.</p>
+    `
+  },
+  {
+    id: 'smart-robot-control',
+    title: 'SmartRobotControl: Dual-Mode Mobile Robot Remote Administration',
+    category: 'ROBOTICS & EMBEDDED',
+    tag: 'EMBEDDED',
+    icon: Smartphone,
+    date: 'Jul 30, 2025',
+    readTime: '4 MIN READ',
+    author: 'Darshan K',
+    excerpt: 'An ESP32-based administration panel to control mobile robots in manual or autonomous navigation configurations.',
+    featured: false,
+    image: 'smart_robot_control.png',
+    github: 'https://github.com/31darsh/SmartRobotControl',
+    content: `
+<p>Modern service and warehouse robots require interfaces to switch between manual overrides and autonomous operation. I created <strong>SmartRobotControl</strong>, a unified administration application that connects to ESP32 robots over local networks.</p>
+
+<h2>Dual Control Modes</h2>
+<ul class="bullet-list">
+  <li><strong>Manual Mode:</strong> Renders virtual joystick interfaces on a mobile web view, transmitting directional vector payloads over WebSocket/UDP to the robot CPU for immediate movement responses.</li>
+  <li><strong>Autonomous Mode:</strong> Uploads coordinate waypoints to the microcontroller. The robot navigates autonomously using ultrasonic sensors and optical encoders, while sending telemetry updates back to the UI.</li>
+</ul>
+
+<h2>Diagnostics Dashboard</h2>
+<p>The console displays battery voltage charts, sensor distance indicators, and status reports, allowing operators to diagnose driving issues in real-time.</p>
+    `
+  },
+  {
+    id: 'caterpillar-asset-tracking',
+    title: 'Caterpillar Asset Tracker: Remote Telemetry via GPS & GSM Modems',
+    category: 'EMBEDDED SYSTEMS',
+    tag: 'EMBEDDED',
+    icon: MapPin,
+    date: 'May 10, 2025',
+    readTime: '5 MIN READ',
+    author: 'Darshan K',
+    excerpt: 'Developing a rugged industrial tracker utilizing STM32 microcontrollers, GPS positioning chips, and GSM cellular modems.',
+    featured: false,
+    image: 'caterpillar_asset_tracking.png',
+    github: 'https://github.com/31darsh/caterpillar_asset_tracking_system',
+    content: `
+<p>Monitoring heavy industrial equipment requires rugged hardware and reliable long-range data transmission. For the <strong>Caterpillar Asset Tracking System</strong>, I programmed STM32 firmware to log GPS location coordinates and stream them over cellular networks.</p>
+
+<h2>Embedded GPS & GSM Drivers</h2>
+<ul class="bullet-list">
+  <li><strong>GPS NMEA Parsing:</strong> Interfaces with a GPS receiver via UART. Implements a parser to extract latitude, longitude, speed, and time metrics from raw NMEA sentences.</li>
+  <li><strong>GSM Modem Modulating:</strong> Configures cellular modems via AT commands. Establishes socket connections over mobile networks to publish telemetry to a remote server.</li>
+  <li><strong>Power Conservation:</strong> Manages STM32 low-power modes (Stop/Sleep), waking up periodically or upon sensing movement from a built-in accelerometer to conserve battery.</li>
 </ul>
     `
   }
