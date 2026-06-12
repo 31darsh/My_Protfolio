@@ -466,8 +466,8 @@ a {
 .font-normal { font-weight: 400; }
 
 .text-xs { font-size: 0.75rem; }
-.text-[10px] { font-size: 10px; }
-.text-[9px] { font-size: 9px; }
+.text-\[10px\] { font-size: 10px; }
+.text-\[9px\] { font-size: 9px; }
 .text-sm { font-size: 0.875rem; }
 .text-base { font-size: 1rem; }
 .text-lg { font-size: 1.125rem; }
