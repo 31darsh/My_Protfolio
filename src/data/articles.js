@@ -1,4 +1,4 @@
-import { Cpu, Radio, Terminal, Award, BookOpen } from 'lucide-react';
+import { Cpu, Radio, Terminal, Award, BookOpen, Layers, Settings } from 'lucide-react';
 
 export const articles = [
   {
@@ -41,6 +41,42 @@ export const articles = [
     `
   },
   {
+    id: 'electric-cycle-telemetry',
+    title: 'Electric Cycle Management: Sensor Ingestion & GSM Telemetry Validation',
+    category: 'FIRMWARE & IoT',
+    tag: 'FIRMWARE',
+    icon: Settings,
+    date: 'May 20, 2024',
+    readTime: '5 MIN READ',
+    author: 'Darshan K',
+    excerpt: 'How I programmed sensor ingestion logic and validated cellular network telemetry for an electric cycle management project using AT commands and MQTT protocols.',
+    featured: false,
+    image: 'electric_cycle.png',
+    github: 'https://github.com/31darsh/My_Protfolio',
+    content: `
+<p>During my internship at PECSOL Technologies, I contributed to an **electric cycle management system**. The objective was to design a robust sensor ingestion pipeline and test onboard cellular modules to transmit telemetry logs (speed, throttle inputs, battery state-of-charge, battery temperature) to a cloud broker.</p>
+
+<h2>Sensor Data Ingestion Pipeline</h2>
+<p>The electric cycle features multiple sensors, including hall-effect speed sensors, analog throttle potentiometers, and I2C-based battery management system (BMS) metrics. I programmed the ingestion logic in Embedded C:</p>
+<ul class="bullet-list">
+  <li><strong>ADC Calibration:</strong> To prevent throttle drift, I implemented moving-average filtering algorithms on the analog inputs.</li>
+  <li><strong>Interrupt-Driven Pulse Counting:</strong> Wheel speed was computed using hardware external interrupts linked to hall-effect sensor pulses, avoiding CPU blocking.</li>
+  <li><strong>BMS Interfacing:</strong> Wrote I2C peripheral drivers to read cell temperatures and voltages periodically.</li>
+</ul>
+
+<h2>GSM/Cellular Telemetry Testing</h2>
+<p>To support wireless connectivity, the cycle utilized a cellular module. I was responsible for writing cellular modem test scripts and validation flows:</p>
+<h3>1. AT Command Modulating</h3>
+<p>Wrote UART-based drivers to configure network states, APNs, and socket bindings using standard AT Commands (e.g. <code>AT+CGATT</code>, <code>AT+CIPSTART</code>). Wrote state-machine parsing logic to handle module error responses and initiate auto-reconnects on dropouts.</p>
+
+<h3>2. MQTT Link Validation</h3>
+<p>Tested network message payloads published to the cloud broker. Validated MQTT topic mapping and connection stability under simulated signal dropouts, verifying local backup flash queuing when the cellular network was offline.</p>
+
+<h2>Results</h2>
+<p>The battery sensor telemetry and throttle filters ran with zero drift. Ingestion validation confirmed accurate battery state transmission over MQTT with a cellular socket success rate exceeding 98% during driving simulation tests.</p>
+    `
+  },
+  {
     id: 'flight-telemetry',
     title: 'Real-Time Flight Telemetry Tracker: Designing Safe Parsers in Bare-Metal C',
     category: 'EMBEDDED SYSTEMS',
@@ -77,6 +113,68 @@ void USART2_IRQHandler(void) {
 
 <h2>Achievements</h2>
 <p>The parser successfully processed packet feeds at **115200 baud** with zero overflow faults over 24-hour continuous tests. By running on bare-metal rather than an operating system, the telemetry scheduler consumed less than 5% of the STM32F4's internal clock cycles, leaving the rest of the processor resources free for active flight control calculations.</p>
+    `
+  },
+  {
+    id: 'pcb-signal-integrity',
+    title: 'KiCad High-Speed PCB Layout: Optimizing Trace Geometry for Signal Integrity',
+    category: 'HARDWARE DESIGN',
+    tag: 'EMBEDDED',
+    icon: Layers,
+    date: 'Sep 15, 2025',
+    readTime: '5 MIN READ',
+    author: 'Darshan K',
+    excerpt: 'Optimizing trace width, routing paths, and ground plane splits to maintain signal integrity and avoid EMI coupling in microcontroller boards designed in KiCad.',
+    featured: false,
+    image: 'pcb_design.png',
+    github: 'https://github.com/31darsh/My_Protfolio',
+    content: `
+<p>PCB design is not just about connecting copper traces; at higher clock rates, every trace acts as a transmission line. During my work at TechVoc Finesse, I designed **custom PCB modules** for STM32 microcontrollers, focusing on schematic layout optimizations and signal integrity.</p>
+
+<h2>Ground Plane Routing & Noise Control</h2>
+<p>Poor layout designs can introduce electromagnetic interference (EMI) and cross-talk. To mitigate this, my routing strategy in KiCad included:</p>
+<ul class="bullet-list">
+  <li><strong>Continuous Ground Reference:</strong> Designed a dedicated ground layer directly beneath high-speed signals. Keeping a continuous ground plane minimizes the loop area, preventing return current path impedance loops.</li>
+  <li><strong>Decoupling Capacitor Placement:</strong> Positioned decoupling capacitors (0.1µF and 10nF) as close as possible to the STM32's power pins, reducing high-frequency transient noise.</li>
+  <li><strong>Differential Pair Routing:</strong> Hand-routed critical high-speed signal lines (like USB/CAN) with matched track lengths and calculated differential trace impedances to prevent reflections.</li>
+</ul>
+
+<h2>Lab Validation</h2>
+<p>Once prototypes were assembled, I validated signal waveforms using high-bandwidth digital storage oscilloscopes. Oscilloscope probing verified clean, sharp rise times on clock channels and confirmed that decoupling filters minimized power plane voltage ripples under full peripheral load.</p>
+    `
+  },
+  {
+    id: 'intel-prototype-debugging',
+    title: 'Intel Prototype Debugging: Driver Validation & Waveform Diagnostics',
+    category: 'EMBEDDED SYSTEMS',
+    tag: 'EMBEDDED',
+    icon: Settings,
+    date: 'Jan 10, 2025',
+    readTime: '4 MIN READ',
+    author: 'Darshan K',
+    excerpt: 'Isolating hardware performance anomalies and configuring low-level serial drivers on Intel architecture prototypes using logic analyzers and oscilloscopes.',
+    featured: false,
+    image: 'oscilloscope_bench.png',
+    github: 'https://github.com/31darsh/My_Protfolio',
+    content: `
+<p>At Univision Technology, I worked on **Intel architecture prototypes**, executing hardware-software integration loops to isolate timing bugs and configure low-level peripheral drivers.</p>
+
+<h2>Low-Level Driver Configurations</h2>
+<p>My daily tasks involved setting register parameters and validating driver libraries in Embedded C:</p>
+<ul class="bullet-list">
+  <li><strong>Serial Driver Configurations:</strong> Set up and configured USART, I2C, and SPI serial registers. Adjusted driver interrupt timings to improve device data throughput.</li>
+  <li><strong>DMA Ingestion:</strong> Linked peripheral receive channels directly to DMA ring buffers to prevent byte drops during burst transactions.</li>
+</ul>
+
+<h2>Hardware-in-the-Loop Debugging</h2>
+<p>When the firmware behaved unexpectedly, software debuggers were combined with physical test equipment. I connected digital oscilloscopes and **logic analyzers** directly to the hardware bus channels:</p>
+<ul class="bullet-list">
+  <li><strong>Bus Timing Analysis:</strong> Captured and decoded serial data frames (SPI, I2C) to verify slave chip addresses and timing constraints.</li>
+  <li><strong>Glitch Hunting:</strong> Isolated transient voltage spikes and signal reflections that caused driver task failures, diagnosing PCB impedance issues.</li>
+</ul>
+
+<h2>Achievements</h2>
+<p>My diagnostic validation loops reduced verification cycles, and driver timing configurations successfully resolved I2C address conflict bugs, boosting peripheral data throughput by 12%.</p>
     `
   },
   {
